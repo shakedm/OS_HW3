@@ -10,6 +10,11 @@ struct in_prod{
     Product* products;
 };
 typedef struct in_prod* inputForProduce;
+struct in_comp{
+    int num_products;
+    int ID;
+};
+typedef struct in_comp* inputForComp;
 
 class Factory{
     bool openForVisitors;
@@ -98,17 +103,45 @@ public:
     }
     int finishSimpleBuyer(unsigned int id)
     {
-        pthread_t finished_prod;
-        finished_prod=mapID[id];
+        pthread_t finished_simpleBuyer;
+        finished_simpleBuyer=mapID[id];
         int res=0;
         int* res_add=&res;
         int** res_add_of_add=&res_add;
-        pthread_join(finished_prod,(void**)res_add_of_add);
+        pthread_join(finished_simpleBuyer,(void**)res_add_of_add);
         return **res_add_of_add;
     }
 
-    void startCompanyBuyer(int num_products, int min_value,unsigned int id);
-    std::list<Product> buyProducts(int num_products);
+    void startCompanyBuyer(int num_products, int min_value,unsigned int id)
+    {
+        companyArrived++;
+        pthread_t CompanyThread;
+        mapID.insert(std::pair<int,pthread_t>(id,CompanyThread));
+        inputForComp arg;
+        arg->num_products=num_products;
+        arg->ID=id;
+        pthread_create(&CompanyThread,NULL,companyFuncAux,(void*)(arg));
+        mapID.erase(id);
+        companyArrived--;
+    }
+    void* companyFuncAux(void* arg)
+    {
+        std::list<Product> boughtByCompany=buyProducts(((inputForComp)arg)->num_products);
+        returnProducts(boughtByCompany,((inputForComp)arg)->ID);
+    }
+    std::list<Product> buyProducts(int num_products)
+    {
+        pthread_mutex_lock(&m);
+        while (ThiefsArrived>0 || availableProducts.size()<num_products)
+        {
+            pthread_cond_wait(&priority,&m);
+        }
+        std::list<Product>
+        for (int i=0;i<num_products;i++)
+        {
+
+        }
+    }
     void returnProducts(std::list<Product> products,unsigned int id);
     int finishCompanyBuyer(unsigned int id);
 
