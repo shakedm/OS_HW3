@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/User/Documents/GitHub/OS_HW3/hw3/Factory.cxx
+Factory.h
+C:/Users/User/Documents/GitHub/OS_HW3/hw3/Factory.h
+
+C:/Users/User/Documents/GitHub/OS_HW3/hw3/Factory.h
+pthread.h
+-
+list
+-
+Product.h
+C:/Users/User/Documents/GitHub/OS_HW3/hw3/Product.h
+
+C:/Users/User/Documents/GitHub/OS_HW3/hw3/Product.h
+
+C:/Users/User/Documents/GitHub/OS_HW3/hw3/main.cpp
+iostream
+-
+
