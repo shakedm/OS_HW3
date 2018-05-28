@@ -23,9 +23,11 @@ class Factory{
     bool someoneInside;
     pthread_mutex_t m;
     std::list<Product> availableProducts;
+    std::list<Pair<int,Product>> stolenProductsList;
     int ThiefsArrived;
     int companyArrived;
     pthread_cond_t priority;
+    pthread_cond_t FactoryIsOpen;
 
 public:
     Factory(): openForVisitors(true),openForReturns(true),someoneInside(false),
@@ -35,6 +37,7 @@ public:
         pthread_mutexattr_init (&attr);
         pthread_mutexattr_settype (&attr, PTHREAD_MUTEX_ERRORCHECK_NP);
         pthread_mutex_init (&priority, &attr);
+        pthread_cond_init(&FactoryIsOpen, NULL);
     };
     ~Factory();
     
@@ -149,11 +152,19 @@ public:
     int stealProducts(int num_products,unsigned int fake_id);
     int finishThief(unsigned int fake_id);
 
-    void closeFactory();
-    void openFactory();
+    void closeFactory(){
+        openForVisitors = FALSE;
+    }
+    void openFactory(){
+        openForVisitors = TRUE;
+    }
     
-    void closeReturningService();
-    void openReturningService();
+    void closeReturningService(){
+        openForReturns = FALSE;
+    }
+    void openReturningService(){
+        openForReturns = TRUE;
+    }
     
     std::list<std::pair<Product, int>> listStolenProducts();
     std::list<Product> listAvailableProducts();
