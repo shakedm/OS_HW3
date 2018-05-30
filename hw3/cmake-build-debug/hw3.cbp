@@ -8,90 +8,93 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug"/>
+				<Option working_dir="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="hw3">
-				<Option output="C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/hw3.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug"/>
+				<Option output="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/hw3.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include/c++"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include/c++/backward"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/../../../../include"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include-fixed"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 hw3"/>
-					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 hw3"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="hw3/fast">
-				<Option output="C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/hw3.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug"/>
+				<Option output="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/hw3.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include/c++"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include/c++/backward"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/../../../../include"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/include-fixed"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/5.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 hw3/fast"/>
-					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 hw3/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug"/>
+				<Option working_dir="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug"/>
+				<Option working_dir="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/User/Documents/GitHub/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/User/Documents/GitHub/OS_HW3/hw3/Factory.cxx">
+		<Unit filename="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/Factory.cxx">
 			<Option target="hw3"/>
 		</Unit>
-		<Unit filename="C:/Users/User/Documents/GitHub/OS_HW3/hw3/Factory.h">
+		<Unit filename="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/Factory.h">
 			<Option target="hw3"/>
 		</Unit>
-		<Unit filename="C:/Users/User/Documents/GitHub/OS_HW3/hw3/main.cpp">
+		<Unit filename="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/Product.h">
 			<Option target="hw3"/>
 		</Unit>
-		<Unit filename="C:/Users/User/Documents/GitHub/OS_HW3/hw3/CMakeLists.txt">
+		<Unit filename="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/test_din.cpp">
+			<Option target="hw3"/>
+		</Unit>
+		<Unit filename="C:/Users/shaked/Documents/GitHub/OS_HW3/OS_HW3/hw3/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

@@ -8,7 +8,6 @@
 #include <math.h>
 class Factory;
 struct in_simpleBuyer{
-    int id_of_bought_prod;
     Factory* f;
 };
 typedef struct in_simpleBuyer inputForSimpleBuyer;
@@ -22,14 +21,12 @@ struct in_comp{
     int num_products;
     int ID;
     int min_value;
-    int* returned_num;
     Factory* f;
 };
 typedef struct in_comp* inputForComp;
 struct in_thief{
     int num_products;
     int fake_ID;
-    int* returned_num;
     Factory* f;
 };
 typedef struct in_thief* inputForThief;
@@ -43,6 +40,7 @@ class Factory{
     int companyArrived;
     std::list<std::pair<Product,int>> stolenProducts;
     pthread_cond_t priority;
+    pthread_cond_t waitProd;
     pthread_cond_t FactoryIsOpen;
     pthread_cond_t FactoryIsOpenForReturns;
 
