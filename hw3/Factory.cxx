@@ -1,12 +1,13 @@
 #include "Factory.h"
 
-Factory::Factory() : openForVisitors(true),openForReturns(true),someoneInside(false),
-                     ThiefsArrived(0),companyArrived(0)
+
+Factory::Factory() : openForVisitors(true),openForReturns(true),
+          ThiefsArrived(0),companyArrived(0)
 {
     pthread_mutexattr_t attr;
     pthread_mutexattr_init (&attr);
     pthread_mutexattr_settype (&attr, PTHREAD_MUTEX_ERRORCHECK_NP);
-    pthread_mutex_init (&priority, &attr);
+    pthread_mutex_init (&m, &attr);
     pthread_cond_init(&priority,NULL);
     pthread_cond_init(&FactoryIsOpen,NULL);
     pthread_cond_init(&FactoryIsOpenForReturns,NULL);
@@ -45,29 +46,43 @@ void Factory::startProduction(int num_products, Product* products,unsigned int i
 
 
 
-void Factory::finishProduction(unsigned int id){
-        pthread_t finished_prod;
-        finished_prod=mapID[id];
-        pthread_join(finished_prod,NULL);
-
-}
-
-void Factory::startSimpleBuyer(unsigned int id){
-    pthread_t SimpleBuyerThread;
-    mapID.insert(std::pair<int,pthread_t>(id,SimpleBuyerThread));
-    int id_of_bought_prod;
-    pthread_create(&SimpleBuyerThread,NULL,tryBuyOneAux,(void*)(&id_of_bought_prod));
-    mapID.erase(id);
-}
-void* Factory::tryBuyOneAux(void* param)
+void Factory::finishProduction(unsigned int id)
 {
-    *((int*)param)=Factory::tryBuyOne();
-    return param;
+    pthread_t finished_prod=mapID[id];
+    pthread_join(finished_prod,NULL);
+}
+void* tryBuyOneAux(void* param)
+{
+    inputForSimpleBuyer* actual_param = (inputForSimpleBuyer*) param;
+    int* result = new int();
+    *result = actual_param->f->tryBuyOne();
+    //printf("got here2");
+    //int a=((inputForSimpleBuyer*)(param))->f->tryBuyOne();
+    //printf("this is tryBuyOne aux with %d\n",a);
+    actual_param->id_of_bought_prod=actual_param->f->tryBuyOne();
+    //((inputForSimpleBuyer*)(param))->id_of_bought_prod=8;
+    //printf("got here3");
+    //printf("aux:%d\n",((inputForSimpleBuyer*)(param))->id_of_bought_prod);
+    return result;
 }
 
-int Factory::tryBuyOne(){
-    if (openForVisitors== false || ThiefsArrived>0 || companyArrived>0 || pthread_mutex_trylock(&m)!=0)
+void Factory::startSimpleBuyer(unsigned int id)
+{
+    pthread_t SimpleBuyerThread;
+    //mapID.insert(std::pair<int,pthread_t&>(id,SimpleBuyerThread));
+    mapID[id] = SimpleBuyerThread;
+    inputForSimpleBuyer* args= new inputForSimpleBuyer();
+    args->f=this;
+    int ans=pthread_create(&mapID[id],NULL,&tryBuyOneAux,(void*)(args));
+    printf("is this that %d\n",args->id_of_bought_prod);
+}
+
+int Factory::tryBuyOne()
+{    /// because of piazza, not according to instructions!!!
+    //if (openForVisitors== false || ThiefsArrived>0 || companyArrived>0 || pthread_mutex_trylock(&m)!=0)
+    if (openForVisitors== false || pthread_mutex_trylock(&m)!= 0)
     {
+        printf("try\n");
         return -1;
     }
     int boughtProductID=0;
@@ -86,31 +101,25 @@ int Factory::tryBuyOne(){
 
 }
 
-int Factory::finishSimpleBuyer(unsigned int id){
-    pthread_t finished_simpleBuyer;
-    finished_simpleBuyer=Factory::mapID[id];
-    int res=0;
-    int* res_add=&res;
-    int** res_add_of_add=&res_add;
-    pthread_join(finished_simpleBuyer,(void**)res_add_of_add);
-    return **res_add_of_add;
-}
-
-void Factory::startCompanyBuyer(int num_products, int min_value,unsigned int id){
-    companyArrived++;
-    pthread_t CompanyThread;
-    mapID.insert(std::pair<int,pthread_t>(id,CompanyThread));
-    inputForComp arg;
-    arg->num_products=num_products;
-    arg->ID=id;
-    arg->min_value=min_value;
-    pthread_create(&CompanyThread,NULL,companyFuncAux,(void*)(arg));
-    mapID.erase(id);
-    companyArrived--;
-}
-void* Factory::companyFuncAux(void* arg)
+int Factory::finishSimpleBuyer(unsigned int id)
 {
-    std::list<Product> boughtByCompany=buyProducts(((inputForComp)arg)->num_products);
+   // pthread_mutex_lock(&m);
+    printf("6564");
+    pthread_t finished_simpleBuyer;
+    finished_simpleBuyer=mapID[id];
+    int* res_add=nullptr;
+    int** res_add_of_add=&res_add;
+    int success = pthread_join(finished_simpleBuyer,(void**)res_add_of_add);
+    printf("finish:%d\n",**res_add_of_add);
+    mapID.erase(id);
+    int return_val = *res_add;
+    delete res_add;
+    // pthread_mutex_unlock(&m);
+    return return_val;
+}
+void* companyFuncAux(void* arg)
+{
+    std::list<Product> boughtByCompany=((inputForComp)(arg))->f->buyProducts(((inputForComp)arg)->num_products);
     std::list<Product> productsToReturn;
     std::list<Product>::iterator it;
     for (it = boughtByCompany.begin(); it != boughtByCompany.end(); ++it)
@@ -120,11 +129,27 @@ void* Factory::companyFuncAux(void* arg)
             productsToReturn.push_back(*it);
         }
     }
-    returnProducts(productsToReturn,((inputForComp)arg)->ID);
+    ((inputForComp)(arg))->f->returnProducts(productsToReturn,((inputForComp)arg)->ID);
     *(((inputForComp)arg)->returned_num) =productsToReturn.size();
     return (((inputForComp)arg)->returned_num) ;
 }
-std::list<Product> Factory::buyProducts(int num_products){
+void Factory::startCompanyBuyer(int num_products, int min_value,unsigned int id)
+{
+    companyArrived++;
+    pthread_t CompanyThread;
+    mapID.insert(std::pair<int,pthread_t&>(id,CompanyThread));
+    inputForComp arg;
+    arg->num_products=num_products;
+    arg->ID=id;
+    arg->min_value=min_value;
+    pthread_create(&CompanyThread,NULL,companyFuncAux,(void*)(arg));
+    mapID.erase(id);
+    companyArrived--;
+}
+
+
+std::list<Product> Factory::buyProducts(int num_products)
+{
     pthread_mutex_lock(&m);
     while (openForVisitors== false)
     {
@@ -143,7 +168,8 @@ std::list<Product> Factory::buyProducts(int num_products){
     pthread_mutex_unlock(&m);
 }
 
-void Factory::returnProducts(std::list<Product> products,unsigned int id){
+void Factory::returnProducts(std::list<Product> products,unsigned int id)
+{
     pthread_mutex_lock(&m);
     while (openForVisitors== false)
     {
@@ -161,7 +187,8 @@ void Factory::returnProducts(std::list<Product> products,unsigned int id){
     pthread_mutex_unlock(&m);
 }
 
-int Factory::finishCompanyBuyer(unsigned int id){
+int Factory::finishCompanyBuyer(unsigned int id)
+{
     pthread_t finished_company;
     finished_company=mapID[id];
     int res=0;
@@ -170,11 +197,17 @@ int Factory::finishCompanyBuyer(unsigned int id){
     pthread_join(finished_company,(void**)res_add_of_add);
     return **res_add_of_add;
 }
-
-void Factory::startThief(int num_products,unsigned int fake_id){
+void* ThiefFuncAux(void* arg)
+{
+    int stolenNum= ((inputForThief)(arg))->f->stealProducts(((inputForThief)(arg))->num_products,((inputForThief)(arg))->fake_ID);
+    *(((inputForThief)(arg))->returned_num)=stolenNum;
+    return ((inputForThief)(arg))->returned_num;
+}
+void Factory::startThief(int num_products,unsigned int fake_id)
+{
     ThiefsArrived++;
     pthread_t ThiefThread;
-    mapID.insert(std::pair<int,pthread_t>(fake_id,ThiefThread));
+    mapID.insert(std::pair<int,pthread_t&>(fake_id,ThiefThread));
     inputForThief arg;
     arg->num_products=num_products;
     arg->fake_ID=fake_id;
@@ -188,39 +221,35 @@ void Factory::startThief(int num_products,unsigned int fake_id){
         pthread_mutex_unlock(&m);
     }
 }
-void* Factory::ThiefFuncAux(void* arg)
-{
-int stolenNum= stealProducts(((inputForThief)(arg))->num_products,((inputForThief)(arg))->fake_ID);
-*(((inputForThief)(arg))->returned_num)=stolenNum;
-return ((inputForThief)(arg))->returned_num;
 
-}
+
 int Factory::stealProducts(int num_products,unsigned int fake_id)
+{
+    pthread_mutex_lock(&m);
+    while (openForVisitors== false)
     {
-        pthread_mutex_lock(&m);
-        while (openForVisitors== false)
-        {
-            pthread_cond_wait(&FactoryIsOpen,&m);
-        }
-        int possibleToSteal=0;
-        if(num_products<availableProducts.size())
-        {
-            possibleToSteal=num_products;
-        }
-        else
-        {
-            possibleToSteal=availableProducts.size();
-        }
-        for (int j=0;j<possibleToSteal;j++)
-        {
-            stolenProducts.push_back(std::pair<Product,int>(*availableProducts.begin(),fake_id));
-            availableProducts.pop_front();
-        }
-        pthread_mutex_unlock(&m);
-        return  possibleToSteal;
+        pthread_cond_wait(&FactoryIsOpen,&m);
     }
+    int possibleToSteal=0;
+    if(num_products<availableProducts.size())
+    {
+        possibleToSteal=num_products;
+    }
+    else
+    {
+        possibleToSteal=availableProducts.size();
+    }
+    for (int j=0;j<possibleToSteal;j++)
+    {
+        stolenProducts.push_back(std::pair<Product,int>(*availableProducts.begin(),fake_id));
+        availableProducts.pop_front();
+    }
+    pthread_mutex_unlock(&m);
+    return  possibleToSteal;
+}
 
-int Factory::finishThief(unsigned int fake_id){
+int Factory::finishThief(unsigned int fake_id)
+{
     pthread_t finished_thief;
     finished_thief=mapID[fake_id];
     int res=0;
@@ -230,7 +259,8 @@ int Factory::finishThief(unsigned int fake_id){
     return **res_add_of_add;
 }
 
-void Factory::closeFactory(){
+void Factory::closeFactory()
+{
     openForVisitors= false;
 }
 
@@ -242,22 +272,24 @@ void Factory::openFactory()
     pthread_mutex_unlock(&m);
 }
 
-void Factory::closeReturningService(){
-    openForReturns=false;
+void Factory::closeReturningService()
+{
+    openForReturns= false;
 }
 
-void Factory::openReturningService(){
-
-        pthread_mutex_lock(&m);
-        openForReturns=true;
-        pthread_cond_broadcast(&FactoryIsOpenForReturns);
-        pthread_mutex_unlock(&m);
-
+void Factory::openReturningService()
+{
+    pthread_mutex_lock(&m);
+    openForReturns=true;
+    pthread_cond_broadcast(&FactoryIsOpenForReturns);
+    pthread_mutex_unlock(&m);
 }
 
-std::list<std::pair<Product, int>> Factory::listStolenProducts(){
+std::list<std::pair<Product, int>> Factory::listStolenProducts()
+{
     return stolenProducts;
 }
+
 std::list<Product> Factory::listAvailableProducts()
 {
     return availableProducts;

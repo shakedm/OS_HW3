@@ -7,7 +7,11 @@
 #include "Product.h"
 #include <math.h>
 class Factory;
-
+struct in_simpleBuyer{
+    int id_of_bought_prod;
+    Factory* f;
+};
+typedef struct in_simpleBuyer inputForSimpleBuyer;
 struct in_prod{
     int num_products;
     Product* products;
@@ -33,7 +37,6 @@ class Factory{
     bool openForVisitors;
     bool openForReturns;
     std::map<int,pthread_t> mapID;
-    bool someoneInside;
     pthread_mutex_t m;
     std::list<Product> availableProducts;
     int ThiefsArrived;
@@ -46,7 +49,7 @@ class Factory{
 public:
     Factory();
     ~Factory();
-
+    
     void startProduction(int num_products, Product* products, unsigned int id);
 
     //void* produceAux(void* produce_param);
@@ -56,15 +59,16 @@ public:
 
     void startSimpleBuyer(unsigned int id);
 
-    void* tryBuyOneAux(void* param);
+    //void* tryBuyOneAux(void* param);
 
     int tryBuyOne();
 
     int finishSimpleBuyer(unsigned int id);
 
+
     void startCompanyBuyer(int num_products, int min_value,unsigned int id);
 
-    void* companyFuncAux(void* arg);
+    //void* companyFuncAux(void* arg);
 
     std::list<Product> buyProducts(int num_products);
 
@@ -75,18 +79,23 @@ public:
 
     void startThief(int num_products,unsigned int fake_id);
 
-    void* ThiefFuncAux(void* arg);
+    //void* ThiefFuncAux(void* arg);
 
     int stealProducts(int num_products,unsigned int fake_id);
 
     int finishThief(unsigned int fake_id);
 
+
     void closeFactory();
+
     void openFactory();
 
+    
     void closeReturningService();
+
     void openReturningService();
 
+    
     std::list<std::pair<Product, int>> listStolenProducts();
 
     std::list<Product> listAvailableProducts();
