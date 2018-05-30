@@ -24,6 +24,7 @@ void Factory::produce(int num_products, Product* products)
     {
         availableProducts.push_back(products[i]);
     }
+    pthread_cond_broadcast(&waitProd);
     pthread_mutex_unlock(&m);
 }
 
@@ -192,6 +193,7 @@ void Factory::returnProducts(std::list<Product> products,unsigned int id)
         availableProducts.push_back(*products.begin());
         products.pop_front();
     }
+    pthread_cond_broadcast(&waitProd);
     pthread_mutex_unlock(&m);
 }
 
@@ -236,6 +238,7 @@ void Factory::startThief(int num_products,unsigned int fake_id)
 
 int Factory::stealProducts(int num_products,unsigned int fake_id)
 {
+    ThiefsArrived++;
     pthread_mutex_lock(&m);
     while (openForVisitors== false)
     {
@@ -255,6 +258,7 @@ int Factory::stealProducts(int num_products,unsigned int fake_id)
         stolenProducts.push_back(std::pair<Product,int>(*availableProducts.begin(),fake_id));
         availableProducts.pop_front();
     }
+    ThiefsArrived--;
     pthread_mutex_unlock(&m);
     return  possibleToSteal;
 }
