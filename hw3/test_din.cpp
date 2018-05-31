@@ -90,6 +90,7 @@ int companyTest()
     f->finishProduction(4);
     f->openFactory();
     assert(f->finishCompanyBuyer(6) == 0);
+
     f->finishThief(5);
     std::list<std::pair<Product, int>> stolen = f->listStolenProducts();
     assert(stolen.size() == 1);
@@ -226,7 +227,7 @@ int bigSynchronizationTest()
 
 
 int main() {
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 1000; i++)
     {
         std::cout << "The test number is: " << i << "\n";
         simpleBuyerTest();

@@ -185,6 +185,9 @@ std::list<Product> Factory::buyProducts(int num_products)
 void Factory::returnProducts(std::list<Product> products,unsigned int id)
 {
     pthread_mutex_lock(&m);
+    while(openForVisitors == false){
+        pthread_cond_wait(&FactoryIsOpen,&m);
+    }
     while (openForReturns== false)
     {
         pthread_cond_wait(&FactoryIsOpenForReturns,&m);
@@ -193,7 +196,8 @@ void Factory::returnProducts(std::list<Product> products,unsigned int id)
     {
         pthread_cond_wait(&priority,&m);
     }
-    for (int i=0;i<products.size();i++)
+    int size = products.size();
+    for (int i = 0;i < size ;i++)
     {
         availableProducts.push_back(*products.begin());
         products.pop_front();
@@ -230,20 +234,16 @@ void Factory::startThief(int num_products,unsigned int fake_id)
     arg->num_products = num_products;
     arg->fake_ID = fake_id;
     arg->f= this;
+    ThiefsArrived++;
     pthread_create(&ThiefThread,NULL,ThiefFuncAux,(void*)(arg));
     mapID[fake_id]= ThiefThread;
-    if (ThiefsArrived==0)
-    {
-        pthread_mutex_lock(&m);
-        pthread_cond_broadcast(&priority);
-        pthread_mutex_unlock(&m);
-    }
+
 }
 
 
 int Factory::stealProducts(int num_products,unsigned int fake_id)
 {
-    ThiefsArrived++;
+
     pthread_mutex_lock(&m);
     while (openForVisitors== false)
     {
@@ -264,6 +264,10 @@ int Factory::stealProducts(int num_products,unsigned int fake_id)
         availableProducts.pop_front();
     }
     ThiefsArrived--;
+    if (ThiefsArrived==0)
+    {
+        pthread_cond_broadcast(&priority);
+    }
     pthread_mutex_unlock(&m);
     return  possibleToSteal;
 }
