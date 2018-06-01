@@ -2,7 +2,7 @@
 
 
 Factory::Factory() : openForVisitors(true),openForReturns(true),
-          ThiefsArrived(0),companyArrived(0)
+                     ThiefsArrived(0),companyArrived(0)
 {
     pthread_mutexattr_t attr;
     pthread_mutexattr_init (&attr);
@@ -16,6 +16,12 @@ Factory::Factory() : openForVisitors(true),openForReturns(true),
 };
 
 Factory::~Factory(){
+    pthread_mutex_destroy(&m);
+    pthread_cond_destroy(&priority);
+    pthread_cond_destroy(&waitProd);
+    pthread_cond_destroy(&FactoryIsOpen);
+    pthread_cond_destroy(&FactoryIsOpenForReturns);
+
 }
 void Factory::produce(int num_products, Product* products)
 {
@@ -31,6 +37,7 @@ void Factory::produce(int num_products, Product* products)
 void* produceAux(void* produce_param)
 {
     ((inputForProduce)(produce_param))->f->produce(((inputForProduce)produce_param)->num_products,((inputForProduce)produce_param)->products);
+    delete (inputForProduce)(produce_param);
 }
 
 void Factory::startProduction(int num_products, Product* products,unsigned int id)
