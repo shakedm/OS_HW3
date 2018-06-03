@@ -307,6 +307,7 @@ void Factory::openFactory()
 
 void Factory::closeReturningService()
 {
+
     openForReturns= false;
 }
 
@@ -320,11 +321,17 @@ void Factory::openReturningService()
 
 std::list<std::pair<Product, int>> Factory::listStolenProducts()
 {
-    return stolenProducts;
+    pthread_mutex_lock(&m);
+    std::list<std::pair<Product, int>> trying= stolenProducts;
+    pthread_mutex_unlock(&m);
+    return trying;
 }
 
 std::list<Product> Factory::listAvailableProducts()
 {
-    return availableProducts;
+    pthread_mutex_lock(&m);
+    std::list<Product> trying= availableProducts;
+    pthread_mutex_unlock(&m);
+    return trying;
 }
 
